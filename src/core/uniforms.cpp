@@ -88,7 +88,7 @@ Uniforms::Uniforms() : m_frame(0), m_play(true), m_change(false) {
     //
     functions["u_iblLuminance"] = UniformFunction("float", [this](vera::Shader& _shader) {
         if (activeCamera)
-            _shader.setUniform("u_iblLuminance", 30000.0f * activeCamera->getExposure());
+            _shader.setUniform("u_iblLuminance", float(30000.0 * activeCamera->getExposure()));
     },
     [this]() { 
         if (activeCamera)
@@ -150,7 +150,7 @@ Uniforms::Uniforms() : m_frame(0), m_play(true), m_change(false) {
 
     functions["u_cameraExposure"] = UniformFunction("float", [this](vera::Shader& _shader) {
         if (activeCamera)
-            _shader.setUniform("u_cameraExposure", activeCamera->getExposure());
+            _shader.setUniform("u_cameraExposure", float(activeCamera->getExposure()));
     },
     [this]() { 
         if (activeCamera)
@@ -291,11 +291,15 @@ bool Uniforms::feedTo(vera::Shader *_shader, bool _lights, bool _buffers ) {
 
         for (size_t i = 0; i < doubleBuffers.size(); i++)
             _shader->setUniformTexture("u_doubleBuffer" + vera::toString(i), doubleBuffers[i]->src, _shader->textureIndex++ );
+    
+        for (size_t i = 0; i < floods.size(); i++)
+            _shader->setUniformTexture("u_flood" + vera::toString(i), floods[i].dst, _shader->textureIndex++ );
     }
 
     // Pass Convolution Piramids resultant Texture
     for (size_t i = 0; i < pyramids.size(); i++)
         _shader->setUniformTexture("u_pyramid" + vera::toString(i), pyramids[i].getResult(), _shader->textureIndex++ );
+
     
     if (_lights) {
         // Pass Light Uniforms

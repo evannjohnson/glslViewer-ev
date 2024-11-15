@@ -79,7 +79,8 @@ public:
 
     // Quilt/Lenticular
     std::string         lenticular;
-    int                 quilt;
+    int                 quilt_resolution;
+    int                 quilt_tile;
 
     // States
     int                 frag_index;
@@ -106,9 +107,20 @@ protected:
     ShaderList          m_buffers_shaders;
     int                 m_buffers_total;
 
-    // Buffers
+    // Double Buffers
     ShaderList          m_doubleBuffers_shaders;
     int                 m_doubleBuffers_total;
+
+    // Pyramids
+    FboList             m_pyramid_fbos;
+    ShaderList          m_pyramid_subshaders;
+    vera::Shader        m_pyramid_shader;
+    int                 m_pyramid_total;
+
+    // Floods
+    ShaderList          m_flood_subshaders;
+    vera::Shader        m_flood_shader;
+    int                 m_flood_total;
 
     // A. CANVAS
     vera::Shader        m_canvas_shader;
@@ -116,12 +128,6 @@ protected:
     // B. SCENE
     SceneRender         m_sceneRender;
     
-    // Pyramid Convolution
-    FboList             m_pyramid_fbos;
-    ShaderList          m_pyramid_subshaders;
-    vera::Shader        m_pyramid_shader;
-    int                 m_pyramid_total;
-
     // Postprocessing
     vera::Shader        m_postprocessing_shader;
     bool                m_postprocessing;

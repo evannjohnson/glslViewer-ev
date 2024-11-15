@@ -11,9 +11,12 @@ glm::vec3 getBufferSize(const std::string& _source, const std::string& _name);
 
 int  countBuffers(const std::string& _source);
 int  countDoubleBuffers(const std::string& _source);
-int  countPyramid(const std::string& _source);
 
+int  countPyramid(const std::string& _source);
 bool checkPyramidAlgorithm(const std::string& _source);
+
+int  countFlood(const std::string& _source);
+bool checkFloodAlgorithm(const std::string& _source);
 
 bool checkFloor(const std::string& _source);
 bool checkBackground(const std::string& _source);
@@ -22,3 +25,6 @@ bool checkPostprocessing(const std::string& _source);
 bool checkPositionBuffer(const std::string& _source);
 bool checkNormalBuffer(const std::string& _source);
 int  countSceneBuffers(const std::string& _source);
+
+int  countDevLookBillboards(const std::string& _source);
+int  countDevLookSpheres(const std::string& _source);

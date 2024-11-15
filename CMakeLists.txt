@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.2)
 
 set(VERSION_MAJOR 3)
-set(VERSION_MINOR 2)
-set(VERSION_PATCH 2)
+set(VERSION_MINOR 3)
+set(VERSION_PATCH 0)
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
 project(glslViewer 
         VERSION ${VERSION}
-        LANGUAGES CXX )
+        LANGUAGES C CXX )
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -58,6 +58,7 @@ include_directories(deps/liblo)
 target_include_directories(glslViewer PRIVATE deps)
 target_link_libraries(glslViewer PRIVATE vera)
 # target_compile_definitions(vera PUBLIC SUPPORT_PLY_BINARY)
+target_compile_definitions(glslViewer PRIVATE DEBUG)
 target_compile_definitions(glslViewer PRIVATE GLSLVIEWER_VERSION_MAJOR=${VERSION_MAJOR})
 target_compile_definitions(glslViewer PRIVATE GLSLVIEWER_VERSION_MINOR=${VERSION_MINOR})
 target_compile_definitions(glslViewer PRIVATE GLSLVIEWER_VERSION_PATCH=${VERSION_PATCH})

@@ -46,8 +46,10 @@ using regex_stringdata_t = const char * const;
 template<typename T1>
 using regex_string_t = std::tuple<T1, regex_stringdata_t>;
 
+// Single check keywords
 enum class regex_check_t {
     Pyramid_Algorithm,
+    Flood_Algorithm,
     Floor,
     Background,
     Post_Processing,
@@ -55,10 +57,11 @@ enum class regex_check_t {
 };
 using regex_check_string_t = regex_string_t<regex_check_t>;
 const auto valid_check_keyword_ids = std::array<regex_check_string_t, +(regex_check_t::MAX_KEYWORDS_CHECK_IDS)> {{
-    {regex_check_t::Pyramid_Algorithm, "PYRAMID_ALGORITHM"}
-    , {regex_check_t::Floor,"FLOOR"}
-    , {regex_check_t::Background, "BACKGROUND"}
-    , {regex_check_t::Post_Processing, "POSTPROCESSING"}
+    {regex_check_t::Pyramid_Algorithm, "PYRAMID_ALGORITHM"},
+    {regex_check_t::Flood_Algorithm, "FLOOD_ALGORITHM"},
+    {regex_check_t::Floor,"FLOOR"},
+    {regex_check_t::Background, "BACKGROUND"},
+    {regex_check_t::Post_Processing, "POSTPROCESSING"},
 }};
 
 bool generic_search_check(const std::string& _source, regex_check_t keyword_id ) {
@@ -72,11 +75,15 @@ bool generic_search_check(const std::string& _source, regex_check_t keyword_id )
     return std::get<0>(does_any_of_the_regex_exist(_source, re));   //return only the "result" boolean.
 }
 
+// Multiple count keywords
 enum class regex_count_t {
     Buffers,
     Double_Buffers,
     Pyramid,
+    Flood,
     Scene_Buffers,
+    DevLook_Spheres,
+    DevLook_Billboards,
     MAX_KEYWORDS_COUNT_IDS
 };
 using regex_count_string_t = regex_string_t<regex_count_t>;
@@ -84,7 +91,10 @@ const auto valid_count_keyword_ids = std::array<regex_count_string_t, +(regex_co
     {regex_count_t::Buffers, "BUFFER"},
     {regex_count_t::Double_Buffers, "DOUBLE_BUFFER"},
     {regex_count_t::Pyramid, "PYRAMID"},
-    {regex_count_t::Scene_Buffers, "SCENE_BUFFER"}
+    {regex_count_t::Flood, "FLOOD"},
+    {regex_count_t::Scene_Buffers, "SCENE_BUFFER"},
+    {regex_count_t::DevLook_Spheres, "DEVLOOK_SPHERE"},
+    {regex_count_t::DevLook_Billboards, "DEVLOOK_BILLBOARD"}
 }};
 
 struct is_not_duplicate_number_predicate {
@@ -201,8 +211,26 @@ bool checkPyramidAlgorithm(const std::string& _source) {
     return generic_search_check(_source, regex_check_t::Pyramid_Algorithm);
 }
 
+// Count how many PYRAMID_ are in the shader
+int countFlood(const std::string& _source) {
+    return generic_search_count(_source, regex_count_t::Flood);
+}
+
+bool checkFloodAlgorithm(const std::string& _source) {
+    return generic_search_check(_source, regex_check_t::Flood_Algorithm);
+}
+
 int countSceneBuffers(const std::string& _source) {
     return generic_search_count(_source, regex_count_t::Scene_Buffers);
+}
+
+
+int countDevLookSpheres(const std::string& _source) {
+    return generic_search_count(_source, regex_count_t::DevLook_Spheres);
+}
+
+int countDevLookBillboards(const std::string& _source) {
+    return generic_search_count(_source, regex_count_t::DevLook_Billboards);
 }
 
 std::string getUniformName(const std::string& _str) {
