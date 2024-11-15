@@ -26,8 +26,8 @@ typedef std::array<float, 4> UniformValue;
 struct UniformData {
     std::string getType();
 
-    void        set(const UniformValue &_value, size_t _size, bool _int = false, bool _queue = true);
-    void        parse(const std::vector<std::string>& _command, size_t _start = 1, bool _queue = true);
+    void        set(const UniformValue &_value, size_t _size, bool _int = false, bool _queue = false);
+    void        parse(const std::vector<std::string>& _command, size_t _start = 1, bool _queue = false);
     std::string print();
     bool        check();
 
